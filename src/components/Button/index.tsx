@@ -10,7 +10,7 @@ enum ButtonColor {
 }
 
 enum ButtonSize {
-  great = 'great',
+  large = 'large',
   middle = 'middle',
   small = 'small',
 }

@@ -2,8 +2,8 @@
 // Please do not change this file!
 interface CssExports {
   blue: string;
-  great: string;
   green: string;
+  large: string;
   middle: string;
   root: string;
   small: string;

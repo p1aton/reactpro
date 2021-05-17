@@ -15,11 +15,11 @@ const HomePage = (props: Props) => {
       <Header />
       <Layout className={s.contentWrap}>
         <div className={s.contentText}>
-          <Heading size="h1">
+          <Heading tag="h1">
             <b>Find</b> all your favorite <b>Pokemon</b>
           </Heading>
-          <Heading size="p">You can know the type of Pokemon, its strengths, disadvantages and abilities</Heading>
-          <Button color="yellow" size="great" onClick={() => console.log('Click Button')}>
+          <Heading tag="h3">You can know the type of Pokemon, its strengths, disadvantages and abilities</Heading>
+          <Button color="yellow" size="large" onClick={() => console.log('Click Button')}>
             See pokemons
           </Button>
         </div>

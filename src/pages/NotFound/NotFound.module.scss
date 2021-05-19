@@ -1,0 +1,49 @@
+@import '../../styles/varibales';
+
+.root {
+  min-height: 100vh;
+  background: $danger;
+}
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 80px;
+  padding-bottom: 45px;
+  text-align: center;
+}
+
+.text {
+  position: absolute;
+
+  font-weight: bold;
+  font-size: 700px;
+  line-height: 700px;
+  letter-spacing: 4px;
+
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.layer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subTitle {
+  margin-bottom: 62px;
+
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 56px;
+  color: $dark;
+
+  & span {
+    color: $white;
+  }
+}
+
+.button {
+  margin: 0 auto;
+}

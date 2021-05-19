@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    "resolveJsonModule": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     /* Basic Options */
     // "incremental": true,                         /* Enable incremental compilation */

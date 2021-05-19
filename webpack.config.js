@@ -5,7 +5,7 @@ const NODE_ENV = process.env.NODE_ENV;
 
 module.exports = {
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss', '.json'],
   },
   mode: NODE_ENV ? NODE_ENV : 'development',
   entry: path.resolve(__dirname, 'src/index.ts'),
@@ -75,9 +75,10 @@ module.exports = {
     }),
   ],
   devServer: {
-    port: 3001,
+    port: 3000,
     open: true,
     hot: true,
+    historyApiFallback: true,
   },
   devtool: 'source-map',
 };

@@ -1,13 +1,19 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-shadow */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-redeclare */
 import React from 'react';
+import cn from 'classnames';
 import Heading from '../Heading';
 
 import s from './PokemonCard.module.scss';
 
 export interface RootObject {
-  types?: string[];
+  name_clean?: string;
+  abilities?: string[];
+  stats?: Stats;
+  types: string[];
   img: string;
   name: string;
   base_experience?: number;
@@ -17,18 +23,19 @@ export interface RootObject {
   order?: number;
   weight?: number;
 }
+export interface Stats {
+  hp?: number;
+  attack: number;
+  defense: number;
+  'special-attack'?: number;
+  'special-defense'?: number;
+  speed?: number;
+}
 
-const PokemonCard: React.FC<RootObject> = ({
-  img,
-  name,
-  base_experience,
-  height,
-  id,
-  is_default,
-  order,
-  weight,
-  types,
-}) => {
+type pokemonCard = RootObject & Stats;
+
+const PokemonCard: React.FC<pokemonCard> = ({ id, name, attack, defense, types, img }) => {
+  console.log('🚀 ~ file: index.tsx ~ line 42 ~ attack', attack);
   return (
     <div className={s.root}>
       <div className={s.infoWrap}>
@@ -37,19 +44,23 @@ const PokemonCard: React.FC<RootObject> = ({
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
-            <div className={s.statValue}>{order}</div>
+            <div className={s.statValue}>{attack}</div>
             Attack
           </div>
           <div className={s.statItem}>
-            <div className={s.statValue}>{base_experience}</div>
+            <div className={s.statValue}>{defense}</div>
             Defense
           </div>
         </div>
         <div className={s.labelWrap}>
-          <span className={s.label}>fire</span>
+          {types.map((type) => (
+            <span key={type} className={cn(s.label, s[type as keyof typeof s])}>
+              {type}
+            </span>
+          ))}
         </div>
       </div>
-      <div className={s.pictureWrap}>
+      <div className={cn(s.pictureWrap, s[types[0] as keyof typeof s])}>
         <img src={img} alt={name} />
       </div>
     </div>

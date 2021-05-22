@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { navigate } from 'hookrouter';
-import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import Button from '../../components/Button';
 import s from './Home.module.scss';
@@ -14,7 +13,6 @@ interface Props {}
 const HomePage = (props: Props) => {
   return (
     <div className={s.root}>
-      <Header />
       <Layout className={s.contentWrap}>
         <div className={s.contentText}>
           <Heading tag="h1">

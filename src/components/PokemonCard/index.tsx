@@ -35,7 +35,6 @@ export interface Stats {
 type pokemonCard = RootObject & Stats;
 
 const PokemonCard: React.FC<pokemonCard> = ({ id, name, attack, defense, types, img }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 42 ~ attack', attack);
   return (
     <div className={s.root}>
       <div className={s.infoWrap}>

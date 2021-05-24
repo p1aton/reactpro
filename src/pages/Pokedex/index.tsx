@@ -2,20 +2,24 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Heading from '../../components/Heading';
 import PokemonCard from '../../components/PokemonCard';
 // import POKEMONS from '../../API/data.json';
 import s from './Pokedex.module.scss';
-import IPokemonCard from './interface';
+// import IPokemonCard from './interface';
+import { IPokemons } from './interface';
 import req from '../../utils/request';
+import useData from '../../Hook/getData';
+import useDebounce from '../../Hook/useDebounce';
 
 interface Api {
   total: number;
   count: number;
   limit: number;
   offset: number;
-  pokemons: IPokemonCard[];
+  // pokemons: IPokemonCard[];
+  pokemons: IPokemons[];
 }
 
 interface Data {
@@ -24,38 +28,37 @@ interface Data {
   isError?: boolean;
 }
 
-const usePokemons = () => {
-  const [data, setData] = useState({} as Api);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getPokemons = async () => {
-      setIsLoading(true);
-
-      try {
-        const result = await req('getPokemons');
-
-        setData(result);
-      } catch (e) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getPokemons();
-  }, []);
-
-  return {
-    data,
-    isLoading,
-    isError,
-  };
-};
+interface IQuery {
+  limit: number;
+  name?: string;
+}
 
 const PokedexPage: React.FC<Data> = () => {
-  const { data, isLoading, isError } = usePokemons();
+  const [searchValue, setSearchValue] = useState('');
+  const [query, setQuery] = useState<IQuery>({
+    limit: 12,
+  });
+
+  const debouncedValue = useDebounce(searchValue, 1000);
+
+  // const query = useMemo(() => ({
+  //   name: searchValue
+  // }), [searchValue]);
+
+  const { data, isLoading, isError } = useData<IPokemons>('getPokemons', query, [debouncedValue]);
+
+  // useEffect(() => {
+  //   console.log('#####: debouncedValue', debouncedValue)
+  // }, [debouncedValue])
+
+  const handleSearchChange = (e: any) => {
+    // console.log('#####: e', e.target.value);
+    setSearchValue(e.target.value);
+    setQuery((state: IQuery) => ({
+      ...state,
+      name: e.target.value,
+    }));
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -69,11 +72,15 @@ const PokedexPage: React.FC<Data> = () => {
     <div>
       <div className={s.pokedex}>
         <Heading tag="h2">
-          {data && data.total} <b>Pokemons</b> for you to choose!
+          {!isLoading && data && data.total} <b>Pokemons</b> for you to choose!
         </Heading>
+        <div>
+          <input type="text" value={searchValue} onChange={handleSearchChange} />
+        </div>
         <div className={s.Wrapper}>
           {/* {data && data.pokemons.map((item: IPokemonCard) => <div>{item.name}</div>)} */}
-          {data &&
+          {!isLoading &&
+            data &&
             data.pokemons.map(({ id, name, stats, types, img }) => (
               <PokemonCard key={id} name={name} attack={stats.attack} defense={stats.defense} types={types} img={img} />
             ))}

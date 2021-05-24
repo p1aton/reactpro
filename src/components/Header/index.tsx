@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { A, usePath } from 'hookrouter';
 import cn from 'classnames';
@@ -31,4 +32,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

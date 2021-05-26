@@ -1,15 +1,16 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/no-redeclare */
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Heading from '../../components/Heading';
 import PokemonCard from '../../components/PokemonCard';
 // import POKEMONS from '../../API/data.json';
 import s from './Pokedex.module.scss';
-// import IPokemonCard from './interface';
-import { IPokemons } from './interface';
-import req from '../../utils/request';
+import { IPokemons, PokemonsRequest } from './interface';
 import useData from '../../Hook/getData';
 import useDebounce from '../../Hook/useDebounce';
 
@@ -31,25 +32,26 @@ interface Data {
 interface IQuery {
   limit: number;
   name?: string;
+  name_clean?: string;
 }
+
+// interface PokContext {
+//   pokemonContext: any
+//   onSelectedPokemons: any
+//   key: any
+// }
 
 const PokedexPage: React.FC<Data> = () => {
   const [searchValue, setSearchValue] = useState('');
   const [query, setQuery] = useState<IQuery>({
     limit: 12,
   });
+  // const pokemonContext = useContext<PokContext>(PokemonContext)
+  // console.log("🚀 ~ file: index.tsx ~ line 45 ~ pokemonContext", pokemonContext)
 
   const debouncedValue = useDebounce(searchValue, 1000);
 
-  // const query = useMemo(() => ({
-  //   name: searchValue
-  // }), [searchValue]);
-
   const { data, isLoading, isError } = useData<IPokemons>('getPokemons', query, [debouncedValue]);
-
-  // useEffect(() => {
-  //   console.log('#####: debouncedValue', debouncedValue)
-  // }, [debouncedValue])
 
   const handleSearchChange = (e: any) => {
     // console.log('#####: e', e.target.value);
@@ -79,11 +81,7 @@ const PokedexPage: React.FC<Data> = () => {
         </div>
         <div className={s.Wrapper}>
           {/* {data && data.pokemons.map((item: IPokemonCard) => <div>{item.name}</div>)} */}
-          {!isLoading &&
-            data &&
-            data.pokemons.map(({ id, name, stats, types, img }) => (
-              <PokemonCard key={id} name={name} attack={stats.attack} defense={stats.defense} types={types} img={img} />
-            ))}
+          {!isLoading && data && data.pokemons.map((item: PokemonsRequest) => <PokemonCard key={item.id} {...item} />)}
         </div>
       </div>
     </div>

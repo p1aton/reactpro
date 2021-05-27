@@ -4,18 +4,32 @@ import { useRoutes } from 'hookrouter';
 import NotFoundPage from './pages/NotFound';
 import routes from './routes';
 import Header from './components/Header';
-// import req from './utils/request';
+// import { PokemonContext } from './context/pokemonContext';
 
-const App = () => {
-  // req().then(data => console.log('#####: data', data))
+interface PokContext {
+  value: [];
+  onSelectedPokemons: (arg: number | null) => void;
+}
+
+const App: React.FC<PokContext> = () => {
+  // const [selectedPokemons, setSelectedPokemons] = useState({});
   const match = useRoutes(routes);
 
+  // const handleSelectedPokemons = () => {
+  //   console.log('#####: handleSelectedPokemons')
+  // }
+
   return match ? (
+    // <PokemonContext.Provider  value={{
+    //   pokemon: selectedPokemons,
+    //   onSelectedPokemons: handleSelectedPokemons
+    // }}>
     <>
       <Header />
       {match}
     </>
   ) : (
+    // </PokemonContext.Provider>
     <NotFoundPage />
   );
 };

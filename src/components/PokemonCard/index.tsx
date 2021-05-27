@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
@@ -5,6 +7,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import React from 'react';
 import cn from 'classnames';
+import { navigate } from 'hookrouter';
 import Heading from '../Heading';
 
 import s from './PokemonCard.module.scss';
@@ -12,42 +15,52 @@ import s from './PokemonCard.module.scss';
 export interface RootObject {
   name_clean?: string;
   abilities?: string[];
-  stats?: Stats;
+  stats: Stats;
   types: string[];
   img: string;
   name: string;
   base_experience?: number;
   height?: number;
-  id?: number;
+  id?: number | string;
   is_default?: boolean;
   order?: number;
   weight?: number;
 }
 export interface Stats {
   hp?: number;
-  attack: number;
-  defense: number;
+  attack?: number;
+  defense?: number;
   'special-attack'?: number;
   'special-defense'?: number;
   speed?: number;
+  // handleClickCard: () => void;
+  // onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 type pokemonCard = RootObject & Stats;
 
-const PokemonCard: React.FC<pokemonCard> = ({ id, name, attack, defense, types, img }) => {
+const PokemonCard: React.FC<pokemonCard> = ({ id, name, stats, types, img }) => {
+  const handleClick = () => {
+    // const pokemon = {...data?.pokemons}
+    // console.log("🚀 ~ file: index.tsx ~ line 77 ~ onClick ~ pokemon", pokemon)
+    // pokemonContext.onSelectedPokemons(key)
+    navigate(`/pokedex/${id}`);
+    console.log('🚀 ~ file: index.tsx ~ line 52 ~ handleClick ~ id', id);
+  };
+
   return (
-    <div className={s.root}>
+    <div className={s.root} data-id={id} onClick={handleClick}>
       <div className={s.infoWrap}>
         <Heading tag="h6" className={s.titleName}>
           {name}
         </Heading>
         <div className={s.statWrap}>
           <div className={s.statItem}>
-            <div className={s.statValue}>{attack}</div>
+            <div className={s.statValue}>{stats.attack}</div>
             Attack
           </div>
           <div className={s.statItem}>
-            <div className={s.statValue}>{defense}</div>
+            <div className={s.statValue}>{stats.defense}</div>
             Defense
           </div>
         </div>

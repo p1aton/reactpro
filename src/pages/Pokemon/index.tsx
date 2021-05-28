@@ -16,13 +16,9 @@ export interface PokemonProps {
 }
 
 const Pokemon: React.FC<PokemonProps> = ({ id }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 19 ~ id', id);
-
   const { data } = useData<IPokemons>('getPokemons', { limit: 1050 }, []);
-  console.log('🚀 ~ file: index.tsx ~ line 22 ~ data', data);
 
   const current = data?.pokemons[(id as number) - 1];
-  console.log('🚀 ~ file: index.tsx ~ line 24 ~ current', current);
 
   return current ? (
     <div className={s.root}>

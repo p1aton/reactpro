@@ -21,7 +21,24 @@
 //   weight?: number;
 // }
 
+import { JSXElementConstructor, ReactElement, ReactNodeArray, ReactPortal } from 'react';
+
 export interface IPokemons {
+  types: any;
+  img: string | undefined;
+  name: string | undefined;
+  order:
+    | string
+    | number
+    | boolean
+    | {}
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | ReactNodeArray
+    | ReactPortal
+    | null
+    | undefined;
+  abilities: any;
+  stats: any;
   total: number;
   pokemons: PokemonsRequest[];
 }

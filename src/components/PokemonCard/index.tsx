@@ -40,6 +40,7 @@ type pokemonCard = RootObject & Stats;
 const PokemonCard: React.FC<pokemonCard> = ({ id, name, stats, types, img }) => {
   const handleClick = () => {
     navigate(`/pokedex/${id}`);
+    console.log('🚀 ~ file: index.tsx ~ line 52 ~ handleClick ~ id', id);
   };
 
   return (

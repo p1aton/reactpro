@@ -3,9 +3,29 @@ import Url from 'url';
 import { config } from '../config/index';
 import getUrlWithParamsConfig from './getUrlWithParamsConfig';
 
+interface IOptions {
+  method: string;
+  body?: string;
+}
+
+interface IGetUrlWithParamsConfig {
+  method: string;
+  uri: Partial<URL>;
+  body: object;
+}
+
 async function req<T>(endpoint: keyof typeof config.client.endpoint, query: object): Promise<T> {
-  const uri = Url.format(getUrlWithParamsConfig(endpoint, query));
-  const res = await fetch(uri).then((res) => res.json());
+  const { method, uri, body }: IGetUrlWithParamsConfig = getUrlWithParamsConfig(endpoint, query);
+
+  const options: IOptions = {
+    method,
+  };
+
+  if (Object.keys(body).length > 0) {
+    options.body = JSON.stringify(body);
+  }
+
+  const res = await fetch(Url.format(uri), options).then((res) => res.json());
 
   return res;
 }

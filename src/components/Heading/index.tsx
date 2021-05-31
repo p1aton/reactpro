@@ -3,7 +3,7 @@ import React from 'react';
 // import cn from 'classnames';
 import s from './Heading.module.scss';
 
-interface TagSize {
+export interface TagSize {
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
   className?: string;
 }

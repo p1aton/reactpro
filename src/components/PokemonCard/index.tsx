@@ -33,17 +33,12 @@ export interface Stats {
   'special-attack'?: number;
   'special-defense'?: number;
   speed?: number;
-  // handleClickCard: () => void;
-  // onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 type pokemonCard = RootObject & Stats;
 
 const PokemonCard: React.FC<pokemonCard> = ({ id, name, stats, types, img }) => {
   const handleClick = () => {
-    // const pokemon = {...data?.pokemons}
-    // console.log("🚀 ~ file: index.tsx ~ line 77 ~ onClick ~ pokemon", pokemon)
-    // pokemonContext.onSelectedPokemons(key)
     navigate(`/pokedex/${id}`);
     console.log('🚀 ~ file: index.tsx ~ line 52 ~ handleClick ~ id', id);
   };

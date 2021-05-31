@@ -6,6 +6,7 @@ import HomePage from './pages/Home';
 import PokedexPage from './pages/Pokedex';
 import Pokemon from './pages/Pokemon';
 import { PokemonProps } from './pages/Pokemon';
+// import Test, { TestProps } from './pages/Test/test';
 
 interface IGeneralMenu {
   title: string;
@@ -19,6 +20,7 @@ export enum LinkEnum {
   LEGENDARIES = '/legendaries',
   DOCUMENTATION = '/documentation',
   POKEMON = '/pokedex/:id',
+  // TEST = '/test/:id',
 }
 
 export const GENERAL_MENU: IGeneralMenu[] = [
@@ -50,6 +52,11 @@ const SECOND_MENU: IGeneralMenu[] = [
     link: LinkEnum.POKEMON,
     component: ({ id }: PokemonProps) => <Pokemon id={id} />,
   },
+  // {
+  //   title: 'Test',
+  //   link: LinkEnum.TEST,
+  //   component: ({ id }: TestProps) => <Test id={id} />,
+  // },
 ];
 
 interface IAccMenu {

@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './styles/index.css';
 
-ReactDOM.render(React.createElement(App), document.getElementById('root'));
+import '../src/styles/index.css';
+
+window.addEventListener('load', () => {
+  ReactDOM.render(React.createElement(App), document.getElementById('root'));
+});

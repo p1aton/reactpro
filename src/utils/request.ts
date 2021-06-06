@@ -14,7 +14,7 @@ interface IGetUrlWithParamsConfig {
   body: object;
 }
 
-async function req<T>(endpoint: keyof typeof config.client.endpoint, query: object): Promise<T> {
+async function req<T>(endpoint: keyof typeof config.client.endpoint, query?: object): Promise<T> {
   const { method, uri, body }: IGetUrlWithParamsConfig = getUrlWithParamsConfig(endpoint, query);
 
   const options: IOptions = {

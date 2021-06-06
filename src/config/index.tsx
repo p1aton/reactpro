@@ -33,7 +33,7 @@ export const config = {
       getOther: {
         method: 'GET',
         uri: {
-          pathname: '/api/v1/other',
+          pathname: '/api/v1/types',
         },
       },
       getPokemon: {

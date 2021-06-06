@@ -5,7 +5,8 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Heading from '../../components/Heading';
 import PokemonCard from '../../components/PokemonCard';
 // import POKEMONS from '../../API/data.json';
@@ -13,6 +14,7 @@ import s from './Pokedex.module.scss';
 import { IPokemons, PokemonsRequest } from './interface';
 import useData from '../../Hook/getData';
 import useDebounce from '../../Hook/useDebounce';
+import { getTypesAction, getPokemonsTypes, getPokemonsTypesLoading } from '../../store/pokemon';
 
 interface Api {
   total: number;
@@ -35,23 +37,24 @@ interface IQuery {
   name_clean?: string;
 }
 
-// interface PokContext {
-//   pokemonContext: any
-//   onSelectedPokemons: any
-//   key: any
-// }
-
 const PokedexPage: React.FC<Data> = () => {
+  const dispatch = useDispatch();
+  const types = useSelector(getPokemonsTypes);
+  console.log('🚀 ~ file: index.tsx ~ line 46 ~ types', types);
+  const isTypesLoading = useSelector(getPokemonsTypesLoading);
+  console.log('🚀 ~ file: index.tsx ~ line 48 ~ isTypesLoading', isTypesLoading);
   const [searchValue, setSearchValue] = useState('');
   const [query, setQuery] = useState<IQuery>({
     limit: 12,
   });
-  // const pokemonContext = useContext<PokContext>(PokemonContext)
-  // console.log("🚀 ~ file: index.tsx ~ line 45 ~ pokemonContext", pokemonContext)
 
   const debouncedValue = useDebounce(searchValue, 1000);
 
   const { data, isLoading, isError } = useData<IPokemons>('getPokemons', query, [debouncedValue]);
+
+  useEffect(() => {
+    dispatch(getTypesAction());
+  }, []);
 
   const handleSearchChange = (e: any) => {
     // console.log('#####: e', e.target.value);
@@ -79,6 +82,7 @@ const PokedexPage: React.FC<Data> = () => {
         <div>
           <input type="text" value={searchValue} onChange={handleSearchChange} />
         </div>
+        <div>{isTypesLoading ? 'Loading...' : types?.map((item) => <div>{item}</div>)}</div>
         <div className={s.Wrapper}>
           {/* {data && data.pokemons.map((item: IPokemonCard) => <div>{item.name}</div>)} */}
           {!isLoading && data && data.pokemons.map((item: PokemonsRequest) => <PokemonCard key={item.id} {...item} />)}
